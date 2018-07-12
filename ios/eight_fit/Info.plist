@@ -39,9 +39,8 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSAppTransportSecurity</key>
-	<!--See http://ste.vn/2015/06/10/configuring-app-transport-security-ios-9-osx-10-11/ -->
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
@@ -52,5 +51,20 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>FiraSans-Bold.otf</string>
+		<string>FiraSans-BoldItalic.otf</string>
+		<string>FiraSans-Book.otf</string>
+		<string>FiraSans-BookItalic.otf</string>
+		<string>FiraSans-Italic.otf</string>
+		<string>FiraSans-Light.otf</string>
+		<string>FiraSans-LightItalic.otf</string>
+		<string>FiraSans-Medium.otf</string>
+		<string>FiraSans-MediumItalic.otf</string>
+		<string>FiraSans-Regular.otf</string>
+		<string>FiraSans-SemiBold.otf</string>
+		<string>FiraSans-SemiBoldItalic.otf</string>
+	</array>
 </dict>
 </plist>
