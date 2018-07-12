@@ -1,33 +1,56 @@
 import React, { PureComponent } from 'react';
-import { View, Image } from 'react-native';
+import {
+  ImageBackground,
+  Image,
+  ActivityIndicator,
+} from 'react-native';
 import PropTypes from 'prop-types';
 
-import { backgroundGrain } from '../../config/images';
+import {
+  backgroundGrain,
+  icon8Logo,
+} from '../../config/images';
 
 import styles from './styles';
 
 export default class Splash extends PureComponent {
   static propTypes = {
     still: PropTypes.bool,
+    navigation: PropTypes.object,
   };
 
   static defaultProps = {
     still: false,
+    navigation: {},
   };
 
   componentDidMount() {
+    const {
+      still,
+      navigation,
+    } = this.props;
     // if still is not set, animate to onboarding screen
-    const { still } = this.props;
+    if (!still) {
+      setTimeout(() => {
+        navigation.navigate('Onboarding');
+      }, 1000);
+    }
   }
 
   render() {
     return (
-      <Image
+      <ImageBackground
         source={backgroundGrain}
         style={styles.containerImage}
       >
-
-      </Image>
+        <Image
+          source={icon8Logo}
+          style={styles.logo}
+        />
+        <ActivityIndicator
+          size="small"
+        />
+      </ImageBackground>
     );
   }
 }
