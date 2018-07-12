@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   containerImage: {
     flex: 1,
-    resizeMode: 'cover',
+    // resizeMode: 'cover',
     alignItems: 'center',
     justifyContent: 'center',
   },

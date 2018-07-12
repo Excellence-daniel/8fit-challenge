@@ -1,0 +1,19 @@
+{
+  "fitness_goals": [
+    {
+      "key": "lose_weight",
+      "title": "Lose weight",
+      "subtitle": "Burn fat & get lean"
+    },
+    {
+      "key": "get_fitter",
+      "title": "Get Fitter",
+      "subtitle": "Tone up & feel healthy"
+    },
+    {
+      "key": "gain_muscle",
+      "title": "Gain Muscle",
+      "subtitle": "Build mass & strength"
+    }
+  ]
+}

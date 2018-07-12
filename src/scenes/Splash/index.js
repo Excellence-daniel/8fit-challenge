@@ -5,6 +5,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import { Transition } from 'react-navigation-fluid-transitions';
 
 import {
   backgroundGrain,
@@ -33,7 +34,7 @@ export default class Splash extends PureComponent {
     if (!still) {
       setTimeout(() => {
         navigation.navigate('Onboarding');
-      }, 1000);
+      }, 500);
     }
   }
 
@@ -43,10 +44,12 @@ export default class Splash extends PureComponent {
         source={backgroundGrain}
         style={styles.containerImage}
       >
-        <Image
-          source={icon8Logo}
-          style={styles.logo}
-        />
+        <Transition shared="logo">
+          <Image
+            source={icon8Logo}
+            style={styles.logo}
+          />
+        </Transition>
         <ActivityIndicator
           size="small"
         />
