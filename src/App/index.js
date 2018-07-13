@@ -5,6 +5,7 @@ import { FluidNavigator } from 'react-navigation-fluid-transitions';
 import Splash from '../scenes/Splash';
 import Onboarding from '../scenes/Onboarding';
 import AgeEntry from '../scenes/AgeEntry';
+import HeightEntry from '../scenes/HeightEntry';
 
 const routesConfig = {
   Splash: {
@@ -15,6 +16,9 @@ const routesConfig = {
   },
   AgeEntry: {
     screen: AgeEntry,
+  },
+  HeightEntry: {
+    screen: HeightEntry,
   },
 };
 

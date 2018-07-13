@@ -1,14 +1,17 @@
 import {
   FITNESS_GOAL,
   UPDATE_AGE,
+  UPDATE_HEIGHT,
   SWITCH_HEIGHT_METRIC,
 } from '../actions/action-types';
 
 const initialState = {
   fitnessGoal: '',
   age: 0,
-  height: 0,
   heightMetric: 'CM',
+  heightCM: 0,
+  heightFt: 0,
+  heightIn: 0,
 };
 
 export default (state = initialState, action) => {
@@ -22,6 +25,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         age: action.data,
+      };
+    case UPDATE_HEIGHT:
+      return {
+        ...state,
+        ...action.data,
       };
     case SWITCH_HEIGHT_METRIC:
       return {

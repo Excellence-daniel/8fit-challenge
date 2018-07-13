@@ -13,3 +13,15 @@ export const getOpacity = animatedObject => (
     outputRange: [0, 1],
   })
 );
+
+export const cmToFeet = (cm) => {
+  const totalInches = Math.round(cm / 2.54);
+  const inches = totalInches % 12;
+  const feet = (totalInches - inches) / 12;
+  return { feet, inches };
+};
+
+export const ftToCM = (feet, inches) => {
+  const newInches = parseInt(parseInt(feet * 12) + parseInt(inches));
+  return Math.round(newInches * 2.54);
+};

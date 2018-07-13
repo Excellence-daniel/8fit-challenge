@@ -1,6 +1,7 @@
 import {
   FITNESS_GOAL,
   UPDATE_AGE,
+  UPDATE_HEIGHT,
   SWITCH_HEIGHT_METRIC,
 } from './action-types';
 
@@ -11,6 +12,11 @@ export const selectFitnessGoal = data => ({
 
 export const updateAge = data => ({
   type: UPDATE_AGE,
+  data,
+});
+
+export const updateHeight = data => ({
+  type: UPDATE_HEIGHT,
   data,
 });
 

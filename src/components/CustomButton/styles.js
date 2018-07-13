@@ -6,11 +6,11 @@ import fonts from '../../config/fonts';
 export default StyleSheet.create({
   button: {
     backgroundColor: colors.textPrimary,
-    height: 50,
-    width: '50%',
+    height: 60,
+    width: '45%',
     paddingLeft: 15,
     paddingRight: 15,
-    borderRadius: 25,
+    borderRadius: 30,
     marginBottom: 20,
     alignItems: 'center',
     justifyContent: 'center',

@@ -6,51 +6,46 @@ import {
   TextInput,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 import colors from '../../config/colors';
 import styles from './styles';
 
 export default class CustomInput extends PureComponent {
   static propTypes = {
-    error: PropTypes.bool,
-    label: PropTypes.string,
     errorMessage: PropTypes.string,
-    maxLength: PropTypes.number,
     onChangeText: PropTypes.func,
-    value: PropTypes.string,
+    controls: PropTypes.array.isRequired,
   };
 
   static defaultProps = {
-    error: false,
-    label: '',
     errorMessage: '',
-    maxLength: 3,
     onChangeText: () => {},
-    value: '',
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      edited: false,
+      edited: {},
     };
   }
 
-  onChangeText = (text) => {
+  onChangeText = (value, identifier) => {
     const { onChangeText } = this.props;
     const { edited } = this.state;
-    if (!edited) {
+    if (!edited[identifier]) {
+      const newEdited = _.cloneDeep(edited);
+      newEdited[identifier] = true;
       this.setState({
-        edited: true,
+        edited: newEdited,
       });
     }
-    onChangeText(text);
+    onChangeText(value, identifier);
   };
 
-  getInputContainerStyle = () => {
+  getInputContainerStyle = (identifier, error) => {
     const { edited } = this.state;
-    const { error } = this.props;
-    if (!edited) {
+    if (!edited[identifier]) {
       return {
         borderBottomWidth: StyleSheet.hairlineWidth,
         borderColor: colors.borderColor,
@@ -67,26 +62,33 @@ export default class CustomInput extends PureComponent {
     };
   };
 
+  errorStatus = () => {
+    const { controls } = this.props;
+    const { edited } = this.state;
+    let error = false;
+    let isEdited = false;
+    _.each(controls, (control) => {
+      if (control.error) {
+        error = true;
+      }
+      if (edited[control.identifier]) {
+        isEdited = true;
+      }
+    });
+    return (isEdited && error) || (!isEdited && error);
+  };
+
   render() {
     const {
       errorMessage,
-      label,
-      maxLength,
-      error,
-      value,
+      controls,
     } = this.props;
-    const { edited } = this.state;
-    const extraStyle = this.getInputContainerStyle();
+    const errorStatus = !!this.errorStatus();
     return (
-      <View
-        style={[
-          styles.container,
-          extraStyle,
-        ]}
-      >
+      <View style={styles.container}>
         <View style={{ height: 20 }}>
           {
-            ((edited && error) || (!edited && error))
+            errorStatus
             ?
               <Text style={styles.errorText}>
                 {errorMessage}
@@ -95,32 +97,52 @@ export default class CustomInput extends PureComponent {
               null
           }
         </View>
-        <View style={styles.inputContainer}>
-          <View style={{ flex: 1 }}>
-            <TextInput
-              autoCorrect={false}
-              autoFocus
-              keyboardType="numeric"
-              maxLength={maxLength}
-              underlineColorAndroid="transparent"
-              onChangeText={this.onChangeText}
-              value={value}
-              style={[
-                styles.input,
-                {
-                  textAlign: label ? 'right' : 'center',
-                },
-              ]}
-            />
-          </View>
+        <View style={styles.mainInputContainer}>
           {
-            label
-            ?
-              <Text style={styles.label}>
-                {label}
-              </Text>
-              :
-              null
+            _.map(controls, (control, index) => {
+              const firstInputMarginStyle = controls.length > 1 && index === 0 ? {
+                marginRight: 20,
+              } : {};
+              return (
+                <View
+                  key={control.identifier}
+                  style={[
+                    styles.inputContainer,
+                    { ...firstInputMarginStyle },
+                    this.getInputContainerStyle(control.identifier, control.error),
+                  ]}
+                >
+                  <View style={{ flex: 5 }}>
+                    <TextInput
+                      autoCorrect={false}
+                      autoFocus
+                      keyboardType="numeric"
+                      maxLength={control.maxLength || 3}
+                      underlineColorAndroid="transparent"
+                      onChangeText={(value) => {
+                        this.onChangeText(value, control.identifier);
+                      }}
+                      value={control.value}
+                      style={[
+                        styles.input,
+                        {
+                          textAlign: control.label ? 'right' : 'center',
+                        },
+                      ]}
+                    />
+                  </View>
+                  {
+                    control.label
+                    ?
+                      <Text style={styles.label}>
+                        {control.label}
+                      </Text>
+                      :
+                      null
+                  }
+                </View>
+              );
+            })
           }
         </View>
       </View>
