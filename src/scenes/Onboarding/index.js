@@ -84,7 +84,7 @@ export default class Onboarding extends PureComponent {
           </AnimatedView>
           <AnimatedView>
             <Text style={styles.goal}>
-              What's your goal?
+              {"What's your goal?"}
             </Text>
           </AnimatedView>
         </View>
