@@ -6,23 +6,23 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { Card } from 'react-native-paper';
-import { Transition } from 'react-navigation-fluid-transitions';
 
-// import { customTransitionFunction } from '../../lib/util';
+import AnimatedView from '../../components/AnimatedView';
+
 import { chevronRight } from '../../config/images';
 import styles from './styles';
 
 const GoalItem = ({
   item,
   onPress,
-  animatedStyle,
+  delay,
 }) => (
-  <View>
+  <AnimatedView
+    delay={delay}
+    duration={500}
+  >
     <Card
-      style={[
-        styles.container,
-        animatedStyle,
-      ]}
+      style={styles.container}
       elevation={3}
       onPress={() => {
         onPress(item);
@@ -42,18 +42,17 @@ const GoalItem = ({
         />
       </View>
     </Card>
-  </View>
+  </AnimatedView>
 );
 
 GoalItem.propTypes = {
   item: PropTypes.object.isRequired,
   onPress: PropTypes.func,
-  animatedStyle: PropTypes.object,
+  delay: PropTypes.number.isRequired,
 };
 
 GoalItem.defaultProps = {
   onPress: () => {},
-  animatedStyle: {},
 };
 
 export default GoalItem;

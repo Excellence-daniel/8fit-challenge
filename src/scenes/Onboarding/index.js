@@ -5,18 +5,14 @@ import {
   Image,
   Text,
   FlatList,
-  Animated,
-  Easing,
+  BackHandler,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-navigation-fluid-transitions';
 
+import AnimatedView from '../../components/AnimatedView';
 import GoalItem from '../../components/GoalItem';
 
-import {
-  getProgress,
-  getOpacity,
-} from '../../lib/util';
 // import firness goals
 import fitnessGoals from '../../fixtures/fitness_goal.json';
 // images
@@ -34,44 +30,23 @@ export default class Onboarding extends PureComponent {
     navigation: PropTypes.object,
   };
 
-  constructor() {
-    super();
-    this.slideValue = new Animated.Value(0);
+  componentDidMount() {
+    // disbale back press
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
   }
 
-  componentDidMount() {
-    this.slideUp();
+  componentWillUnmount() {
+    // remove listener
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
   }
 
   onGoalSelect = (goal) => {
     console.log('Goal: ', goal);
   };
 
-  getAnimationStyle = () => {
-    const progress = getProgress(this.slideValue);
-    const opacity = getOpacity(this.slideValue);
-    return {
-      opacity,
-      transform: [
-        { translateY: progress },
-      ],
-    };
-  };
-
-  slideUp = () => {
-    this.slideValue.setValue(0);
-    Animated.timing(
-      this.slideValue,
-      {
-        toValue: 1,
-        duration: 700,
-        delay: 700,
-      },
-    ).start();
-  }
+  handleBackPress = () => true;
 
   render() {
-    const animationStyle = this.getAnimationStyle();
     return (
       <ImageBackground
         source={backgroundGrain}
@@ -102,22 +77,16 @@ export default class Onboarding extends PureComponent {
               style={styles.logo}
             />
           </Transition>
-          <Animated.Text
-            style={[
-              styles.welcome,
-              animationStyle,
-            ]}
-          >
-            WELCOME TO 8FIT
-          </Animated.Text>
-          <Animated.Text
-            style={[
-              styles.goal,
-              animationStyle,
-            ]}
-          >
-            What's your goal?
-          </Animated.Text>
+          <AnimatedView>
+            <Text style={styles.welcome}>
+              WELCOME TO 8FIT
+            </Text>
+          </AnimatedView>
+          <AnimatedView>
+            <Text style={styles.goal}>
+              What's your goal?
+            </Text>
+          </AnimatedView>
         </View>
         <View style={styles.bottomView}>
           <FlatList
@@ -129,7 +98,7 @@ export default class Onboarding extends PureComponent {
                 <GoalItem
                   item={rowData.item}
                   onPress={this.onGoalSelect}
-                  animatedStyle={animationStyle}
+                  delay={((rowData.index + 1) * 100) + 600}
                 />
               )
             }

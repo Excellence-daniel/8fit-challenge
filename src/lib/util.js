@@ -39,7 +39,7 @@
 export const getProgress = animatedObject => (
   animatedObject.interpolate({
     inputRange: [0, 0.4999999, 0.999999, 1],
-    outputRange: [15, 0, 0, 0],
+    outputRange: [10, 0, 0, 0],
   })
 );
 
