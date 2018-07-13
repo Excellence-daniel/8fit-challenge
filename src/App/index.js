@@ -4,6 +4,7 @@ import { FluidNavigator } from 'react-navigation-fluid-transitions';
 
 import Splash from '../scenes/Splash';
 import Onboarding from '../scenes/Onboarding';
+import AgeEntry from '../scenes/AgeEntry';
 
 const routesConfig = {
   Splash: {
@@ -11,6 +12,9 @@ const routesConfig = {
   },
   Onboarding: {
     screen: Onboarding,
+  },
+  AgeEntry: {
+    screen: AgeEntry,
   },
 };
 

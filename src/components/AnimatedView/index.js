@@ -48,7 +48,7 @@ export default class AnimatedView extends PureComponent {
         toValue: 1,
         duration,
         delay,
-        easing: Easing.ease,
+        easing: Easing.easing,
         useNativeDriver: true,
       },
     ).start();

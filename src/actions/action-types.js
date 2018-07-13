@@ -1,1 +1,3 @@
+export const FITNESS_GOAL = 'FITNESS_GOAL';
+export const UPDATE_AGE = 'UPDATE_AGE';
 export const SWITCH_HEIGHT_METRIC = 'SWITCH_HEIGHT_METRIC';

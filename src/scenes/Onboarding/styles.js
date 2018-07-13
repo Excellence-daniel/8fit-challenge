@@ -7,7 +7,6 @@ import fonts from '../../config/fonts';
 export default StyleSheet.create({
   containerImage: {
     flex: 1,
-    // resizeMode: 'cover',
     paddingTop: Platform.OS === 'ios' ? 20 : 0,
   },
   logo: {
@@ -19,6 +18,7 @@ export default StyleSheet.create({
   topView: {
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 10,
   },
   bottomView: {
     flex: 1,
@@ -48,11 +48,5 @@ export default StyleSheet.create({
     fontSize: 12,
     color: colors.textPrimary,
     marginBottom: 20,
-  },
-  goal: {
-    fontFamily: fonts.bold,
-    fontSize: 24,
-    color: colors.textPrimary,
-    marginBottom: 10,
   },
 });

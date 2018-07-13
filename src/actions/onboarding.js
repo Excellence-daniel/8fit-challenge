@@ -1,10 +1,20 @@
 import {
+  FITNESS_GOAL,
+  UPDATE_AGE,
   SWITCH_HEIGHT_METRIC,
 } from './action-types';
 
-export const initQuestionsFetch = metric => ({
-  type: SWITCH_HEIGHT_METRIC,
-  data: metric,
+export const selectFitnessGoal = data => ({
+  type: FITNESS_GOAL,
+  data,
 });
 
-export default {};
+export const updateAge = data => ({
+  type: UPDATE_AGE,
+  data,
+});
+
+export const switchHeightMetric = data => ({
+  type: SWITCH_HEIGHT_METRIC,
+  data,
+});

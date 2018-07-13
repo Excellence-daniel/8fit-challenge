@@ -1,4 +1,6 @@
 import {
+  FITNESS_GOAL,
+  UPDATE_AGE,
   SWITCH_HEIGHT_METRIC,
 } from '../actions/action-types';
 
@@ -11,6 +13,16 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case FITNESS_GOAL:
+      return {
+        ...state,
+        fitnessGoal: action.data,
+      };
+    case UPDATE_AGE:
+      return {
+        ...state,
+        age: action.data,
+      };
     case SWITCH_HEIGHT_METRIC:
       return {
         ...state,

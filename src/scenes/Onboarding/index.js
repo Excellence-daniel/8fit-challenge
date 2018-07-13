@@ -8,14 +8,15 @@ import {
   BackHandler,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Transition } from 'react-navigation-fluid-transitions';
 
 import AnimatedView from '../../components/AnimatedView';
 import GoalItem from '../../components/GoalItem';
+import HeaderLabel from '../../components/HeaderLabel';
 
-// import firness goals
+import { selectFitnessGoal } from '../../actions/onboarding';
 import fitnessGoals from '../../fixtures/fitness_goal.json';
-// images
 import {
   backgroundGrain,
   icon8Logo,
@@ -25,9 +26,10 @@ import {
 } from '../../config/images';
 import styles from './styles';
 
-export default class Onboarding extends PureComponent {
+class Onboarding extends PureComponent {
   static propTypes = {
-    navigation: PropTypes.object,
+    navigation: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -41,7 +43,11 @@ export default class Onboarding extends PureComponent {
   }
 
   onGoalSelect = (goal) => {
-    console.log('Goal: ', goal);
+    // save selected goal to redux store
+    const { dispatch, navigation } = this.props;
+    dispatch(selectFitnessGoal(goal.key));
+    // navigate to age section
+    navigation.navigate('AgeEntry');
   };
 
   handleBackPress = () => true;
@@ -83,9 +89,9 @@ export default class Onboarding extends PureComponent {
             </Text>
           </AnimatedView>
           <AnimatedView>
-            <Text style={styles.goal}>
-              {"What's your goal?"}
-            </Text>
+            <HeaderLabel
+              label={"What's your goal?"}
+            />
           </AnimatedView>
         </View>
         <View style={styles.bottomView}>
@@ -108,3 +114,5 @@ export default class Onboarding extends PureComponent {
     );
   }
 }
+
+export default connect()(Onboarding);

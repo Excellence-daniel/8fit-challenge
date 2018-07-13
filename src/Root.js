@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
+import { NativeModules } from 'react-native';
 import { Provider } from 'react-redux';
 
 import configureStore from './Store';
 
 import App from './App';
-import Splash from './scenes/Splash';
+// import Splash from './scenes/Splash';
+
+// set experimental layout animation
+if (NativeModules.UIManager.setLayoutAnimationEnabledExperimental) {
+  NativeModules.UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 export default class Root extends Component {
   constructor(props) {
@@ -27,7 +33,7 @@ export default class Root extends Component {
     const { store, isLoading } = this.state;
 
     if (isLoading) {
-      return <Splash still />;
+      return null;
     }
 
     return (
