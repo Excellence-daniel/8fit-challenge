@@ -20,9 +20,9 @@ export default ({ size }) => {
   const buttonWidth = getSize(size);
   const button = {
     flexDirection: 'row',
-    height: 55,
+    height: 45,
     width: buttonWidth,
-    borderRadius: 27,
+    borderRadius: 22,
     marginTop: 20,
     alignItems: 'center',
     borderWidth: 1,

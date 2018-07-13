@@ -6,6 +6,7 @@ import Splash from '../scenes/Splash';
 import Onboarding from '../scenes/Onboarding';
 import AgeEntry from '../scenes/AgeEntry';
 import HeightEntry from '../scenes/HeightEntry';
+import Success from '../scenes/Success';
 
 const navigatorOptions = {
   headerMode: 'none',
@@ -48,6 +49,9 @@ export default createStackNavigator(
     },
     HeightEntry: {
       screen: HeightEntry,
+    },
+    Success: {
+      screen: Success,
     },
   },
   {

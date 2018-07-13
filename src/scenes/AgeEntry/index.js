@@ -48,7 +48,7 @@ class AgeEntry extends PureComponent {
       <Container>
         <ToolBar
           onBackPress={this.goBack}
-          level={2}
+          level={1}
         />
         <HeaderLabel
           label="How old are you?"

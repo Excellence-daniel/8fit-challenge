@@ -174,7 +174,7 @@ class HeightEntry extends PureComponent {
       <Container>
         <ToolBar
           onBackPress={this.goBack}
-          level={3}
+          level={2}
         />
         <HeaderLabel
           label="How tall are you?"
