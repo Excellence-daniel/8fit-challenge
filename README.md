@@ -18,6 +18,8 @@ Redux was used for state management and persists data locally.
 
 Having tried to create the aforementioned animations with the react-native `Animated` API and had several issues, partly due to the limited experience I've had with the API; I decided to use an npm module - [FluidTransitions](https://github.com/fram-x/FluidTransitions). Even though the module is hightly customizable, I had to combine both react-native `Animated` and `FluidTransitions` to create a near copy of the animation.
 
+I also added error messages on both age and height entry screens based on the `8fit` app downloaded from Google app store
+
 
 ## Issues
 
