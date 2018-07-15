@@ -9,9 +9,9 @@ const initialState = {
   fitnessGoal: '',
   age: 0,
   heightMetric: 'CM',
-  heightCM: 0,
-  heightFt: 0,
-  heightIn: 0,
+  heightCM: '',
+  heightFt: '',
+  heightIn: '',
 };
 
 export default (state = initialState, action) => {

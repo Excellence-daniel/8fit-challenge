@@ -15,7 +15,10 @@ class AgeEntry extends PureComponent {
   static propTypes = {
     navigation: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
-    age: PropTypes.number,
+    age: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
   };
 
   static defaultProps = {
@@ -24,12 +27,8 @@ class AgeEntry extends PureComponent {
 
   onChangeText = (value) => {
     const { dispatch } = this.props;
-    const sanitizedNumber = Number(value);
-    if (isNaN(sanitizedNumber) || sanitizedNumber > 120) {
-      return;
-    }
     // save new age in redux
-    dispatch(updateAge(sanitizedNumber));
+    dispatch(updateAge(value));
   };
 
   continue = () => {
@@ -44,6 +43,9 @@ class AgeEntry extends PureComponent {
 
   render() {
     const { age } = this.props;
+    const sanitizedAge = Number(age);
+    const error = isNaN(sanitizedAge) || sanitizedAge < 13 || sanitizedAge > 120;
+    const formattedAge = age ? String(age) : '';
     return (
       <Container>
         <ToolBar
@@ -56,16 +58,16 @@ class AgeEntry extends PureComponent {
         <CustomInput
           controls={[{
             maxLength: 3,
-            value: age ? String(age) : '',
+            value: formattedAge,
             identifier: 'age',
-            error: age < 13 && age > 0,
+            error,
           }]}
           errorMessage="You must be 13 years or older"
           onChangeText={this.onChangeText}
         />
         <ButtonView
           label="Continue"
-          disabled={age < 13}
+          disabled={error}
           onPress={this.continue}
         />
         <KeyboardHandler />

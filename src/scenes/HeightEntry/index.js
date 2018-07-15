@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import Container from '../../components/Container';
 import ToolBar from '../../components/ToolBar';
@@ -28,15 +29,15 @@ class HeightEntry extends PureComponent {
     navigation: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
     heightMetric: PropTypes.string.isRequired,
-    heightCM: PropTypes.number,
-    heightFt: PropTypes.number,
-    heightIn: PropTypes.number,
+    heightCM: PropTypes.string,
+    heightFt: PropTypes.string,
+    heightIn: PropTypes.string,
   };
 
   static defaultProps = {
-    heightCM: 0,
-    heightFt: 0,
-    heightIn: 0,
+    heightCM: '',
+    heightFt: '',
+    heightIn: '',
   };
 
   onChangeText = (value, identifier) => {
@@ -45,68 +46,69 @@ class HeightEntry extends PureComponent {
       heightIn,
       heightFt,
     } = this.props;
-    const sanitizedNumber = Number(value);
-    if (isNaN(sanitizedNumber)) {
-      return;
-    }
-
+    // const sanitizedNumber = Number(value);
+    // const invalidNumber = isNaN(sanitizedNumber);
+    const convertedNumber = Number(value);
+    const invalidNumber = isNaN(convertedNumber);
     // process based on heightMetric value
     switch (identifier) {
       case 'CM':
-        if (sanitizedNumber < 125 || sanitizedNumber > 301) {
+        if (invalidNumber || convertedNumber < 125 || convertedNumber > 301) {
           // update height, setting others to zero
           dispatch(updateHeight({
-            heightCM: sanitizedNumber,
-            heightFt: 0,
-            heightIn: 0,
+            heightCM: value,
+            heightFt: '',
+            heightIn: '',
           }));
         } else {
           // convert from cm to ft
-          const convertedHeight = cmToFeet(sanitizedNumber);
+          const convertedHeight = cmToFeet(convertedNumber);
           dispatch(updateHeight({
-            heightCM: sanitizedNumber,
+            heightCM: value,
             heightFt: convertedHeight.feet,
             heightIn: convertedHeight.inches,
           }));
         }
         break;
       case 'FT':
-        if ((sanitizedNumber < 4 || sanitizedNumber > 9)) {
+        const heightInNum = Number(heightIn);
+        if (invalidNumber || convertedNumber < 4 || convertedNumber > 9) {
           dispatch(updateHeight({
-            heightCM: 0,
-            heightFt: sanitizedNumber,
+            heightCM: '',
+            heightFt: value,
           }));
-        } else if (heightIn < 0 || heightIn > 11) {
+        } else if (heightInNum < 0 || heightIn > 11) {
           dispatch(updateHeight({
-            heightCM: 0,
-            heightFt: sanitizedNumber,
+            heightCM: '',
+            heightFt: value,
           }));
         } else {
           // convert to cm
-          const convertedHeight = ftToCM(sanitizedNumber, heightIn);
+          const convertedHeight = ftToCM(convertedNumber, heightInNum);
           dispatch(updateHeight({
             heightCM: convertedHeight,
-            heightFt: sanitizedNumber,
+            heightFt: value,
           }));
         }
         break;
       case 'IN':
-        if ((sanitizedNumber < 0 || sanitizedNumber > 11)) {
+        const heightFtNum = Number(heightFt);
+        if (_.isEmpty(value) || invalidNumber || convertedNumber < 0 || convertedNumber > 11) {
           dispatch(updateHeight({
-            heightCM: 0,
-            heightIn: sanitizedNumber,
+            heightCM: '',
+            heightIn: value,
           }));
-        } else if (heightFt < 4 || heightFt > 9) {
+        } else if (heightFtNum < 4 || heightFtNum > 9) {
           dispatch(updateHeight({
-            heightCM: 0,
-            heightIn: sanitizedNumber,
+            heightCM: '',
+            heightIn: value,
           }));
         } else {
           // convert to cm
-          const convertedHeight = ftToCM(heightFt, sanitizedNumber);
+          const convertedHeight = ftToCM(heightFtNum, convertedNumber);
           dispatch(updateHeight({
             heightCM: convertedHeight,
-            heightIn: sanitizedNumber,
+            heightIn: value,
           }));
         }
         break;
@@ -122,25 +124,28 @@ class HeightEntry extends PureComponent {
       heightFt,
       heightIn,
     } = this.props;
+    const heightCMNum = Number(heightCM);
+    const heightFtMNum = Number(heightFt);
+    const heightInNum = Number(heightIn);
     if (heightMetric === 'CM') {
       return [{
-        error: (heightCM < 125 && heightCM > 0) || heightCM > 301,
+        error: isNaN(heightCM) || heightCMNum < 125 || heightCMNum > 301,
         maxLength: 3,
-        value: heightCM ? String(heightCM) : '',
+        value: heightCM,
         label: 'Cm',
         identifier: 'CM',
       }];
     }
     return [{
-      error: (heightFt < 4 && heightFt > 0) || heightFt > 9,
+      error: isNaN(heightFtMNum) || heightFtMNum < 4 || heightFtMNum > 9,
       maxLength: 1,
-      value: heightFt ? String(heightFt) : '',
+      value: heightFt,
       label: 'Ft',
       identifier: 'FT',
     }, {
-      error: heightIn > 11 || heightIn < 0,
+      error: isNaN(heightInNum) || heightInNum < 0 || heightInNum > 11,
       maxLength: 2,
-      value: heightIn ? String(heightIn) : '',
+      value: heightIn,
       label: 'In',
       identifier: 'IN',
     }];

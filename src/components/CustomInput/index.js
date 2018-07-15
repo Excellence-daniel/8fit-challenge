@@ -75,7 +75,7 @@ export default class CustomInput extends PureComponent {
         isEdited = true;
       }
     });
-    return (isEdited && error) || (!isEdited && error);
+    return isEdited && error;
   };
 
   render() {
