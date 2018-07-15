@@ -17,11 +17,23 @@ class Success extends PureComponent {
   static propTypes = {
     navigation: PropTypes.object.isRequired,
     fitnessGoal: PropTypes.string.isRequired,
-    age: PropTypes.number.isRequired,
+    age: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]).isRequired,
     heightMetric: PropTypes.string.isRequired,
-    heightCM: PropTypes.number.isRequired,
-    heightFt: PropTypes.number.isRequired,
-    heightIn: PropTypes.number.isRequired,
+    heightCM: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]).isRequired,
+    heightFt: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]).isRequired,
+    heightIn: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]).isRequired,
   };
 
   getHeightText = () => {
